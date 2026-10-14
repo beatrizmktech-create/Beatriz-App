@@ -1,4 +1,4 @@
-/* Rotina Bea & Lo — interface. Dados e regras ficam em plano.js. */
+/* Rotina da Casa — interface. Dados e regras ficam em plano.js. */
 (function () {
   "use strict";
   const P = window.PLANO;
@@ -14,13 +14,13 @@
    * Sempre salva no aparelho. Quando aberto como Artifact no claude.ai,
    * também sincroniza com o banco compartilhado, para as duas verem
    * as mesmas marcações (lista de compras, checklist, medidas). */
-  const LS_DADOS = "rotina-bea-lo:dados:v1";
-  const LS_PREFS = "rotina-bea-lo:prefs:v1";
+  const LS_DADOS = "rotina-da-casa:dados:v1";
+  const LS_PREFS = "rotina-da-casa:prefs:v1";
   const ler = (k, padrao) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : padrao; } catch (e) { return padrao; } };
   const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* sem armazenamento */ } };
 
   let cache = ler(LS_DADOS, {});
-  const prefs = Object.assign({ pessoa: "bea", aba: "hoje", local: { bea: "casa", lo: "academia" }, som: true, filtroCompras: "todas" }, ler(LS_PREFS, {}));
+  const prefs = Object.assign({ pessoa: "a", aba: "hoje", local: { a: "casa", b: "academia" }, som: true, filtroCompras: "todas" }, ler(LS_PREFS, {}));
   const salvarPrefs = () => gravar(LS_PREFS, prefs);
 
   function fundir(alvo, patch) {
@@ -86,6 +86,8 @@
   const ui = { data: hojeStr(), semanaCompras: null, confirmarLimpar: false, descanso: null };
   const inicio = () => doc("config/geral").inicio || P.INICIO_PADRAO;
   const diaPath = (p, data) => "dia/" + p + "_" + data;
+  // Nomes ficam nos dados (aparelho ou banco do link), nunca no código.
+  const nomeDe = (p) => ((doc("config/geral").nomes || {})[p] || "").trim() || P.PESSOAS[p].nome;
 
   function itensDoDia(p, data) {
     const c = P.cronograma(p, data, inicio());
@@ -155,7 +157,7 @@
     h += '<div class="stack"><div class="row" style="justify-content:space-between"><span><strong class="mono">' + feitos + " de " + total + "</strong> feitos</span>" +
       '<span class="small muted">Semana ' + c.semana + " · Mês " + c.mes + " · " + esc(c.fase.nome) + "</span></div>" +
       '<div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="' + total + '" aria-valuenow="' + feitos + '"><i style="width:' + (total ? (feitos / total) * 100 : 0) + '%"></i></div></div>';
-    h += '<label class="toggle" for="dificil"><span><strong>Dia difícil</strong><br><span class="small muted">Mostra só o essencial, com versões mínimas das refeições. O mínimo conta.</span></span><input type="checkbox" id="dificil"' + (c.dificil ? " checked" : "") + "></label>";
+    h += '<label class="toggle" for="dificil"><span><strong>Dia difícil</strong><br><span class="small muted">Mostra só o essencial, com versões mínimas das refeições. O mínimo conta.</span></span><input type="checkbox" id="dificil"' + (c.dificil ? " checked" : "") + '><span class="sw" aria-hidden="true"></span></label>';
 
     const blocos = [["Manhã", 0, 720], ["Tarde", 720, 1080], ["Noite", 1080, 1440]];
     for (const [nome, de, ate] of blocos) {
@@ -193,7 +195,7 @@
     h += '<div class="card"><span class="label">Semana ' + c.semana + " · Fase " + c.fase.n + " de 4</span><h2>" + esc(c.fase.nome) + '</h2><span class="muted">' + esc(c.fase.texto) + "</span></div>";
     if (!letra) {
       h += '<div class="card"><h3>Hoje é dia de descanso</h3><span class="muted">' +
-        (p === "bea" ? "Caminhada leve de 10 min depois do jantar." : (P.parseData(ui.data).getDay() === 3 ? "Caminhada de 30 min ou 8.000 passos." : "Descanso também faz o músculo crescer.")) +
+        (p === "a" ? "Caminhada leve de 10 min depois do jantar." : (P.parseData(ui.data).getDay() === 3 ? "Caminhada de 30 min ou 8.000 passos." : "Descanso também faz o músculo crescer.")) +
         "</span><span class=\"small muted\">Faltou um treino na semana? Escolha a letra que ficou para trás e faça hoje.</span></div>";
     }
     h += '<div class="stack"><span class="label">Treino</span><div class="seg" role="group" aria-label="Letra do treino">' +
@@ -231,22 +233,22 @@
       '<span class="small muted mono">' + feitosSets + " de " + totalSets + " séries</span>" +
       (completo ? '<div class="agora"><h2>Treino feito.</h2><span>Já marquei no checklist de hoje.</span></div>' :
         '<button class="btn ghost" data-curto="1">Fiz uma versão curta (conta como feito)</button>') + "</div>";
-    if (p === "bea") h += '<p class="small muted">Comeu pouco hoje? Faça 2 séries de cada. Treinar cansada e sem comida atrapalha o ganho de músculo.</p>';
+    if (p === "a") h += '<p class="small muted">Comeu pouco hoje? Faça 2 séries de cada. Treinar cansada e sem comida atrapalha o ganho de músculo.</p>';
     return h + "</section>";
   }
 
   /* ---------- Dieta ---------- */
   const REGRAS = {
-    bea: [
+    a: [
       "Sete refeições pequenas em vez de três grandes. Nenhuma precisa encher.",
-      "Líquido conta como comida e é mais fácil de engolir: os shakes são a base do ganho de peso.",
-      "Coma na ordem legume → proteína → carboidrato. Reduz o pico de glicose.",
+      "Líquido conta como comida e é mais fácil de tomar: os shakes são a base do ganho de peso.",
+      "Coma na ordem legume → proteína → carboidrato. Reduz o pico de açúcar no sangue.",
       "Doce sempre junto de proteína ou gordura (leite, pasta de amendoim), nunca sozinho.",
-      "10 minutos de caminhada depois do jantar baixam a glicose da noite.",
+      "10 minutos de caminhada depois do jantar reduzem o pico de açúcar da noite.",
       "Alimentos macios que costumam descer: ovos, frango desfiado no molho, purês, sopas cremosas, iogurte, queijo, ricota, pasta de amendoim, abacate, banana.",
       "Pese-se uma vez por semana, na segunda, e só. Se não subiu em 2 semanas seguidas, adiante a porção do mês seguinte.",
     ],
-    lo: [
+    b: [
       "A porção vem da marmita, não do olho. Potes iguais, montados no domingo.",
       "Não dá para queimar gordura só da barriga ou do braço. Abdominal não tira gordura da barriga; o que tira é comer um pouco abaixo do gasto + musculação, e a barriga costuma ser a última a baixar.",
       "Flacidez melhora com músculo. Por isso a musculação é a parte principal do plano, e o cardio é complemento.",
@@ -263,12 +265,12 @@
     const mes = P.mesDoPlano(sem);
     const aguaTotal = (pe.aguaMl * 7 + pe.aguaMl + 100) / 1000;
     let h = "<section>";
-    h += '<div class="card"><span class="label">' + esc(pe.nome) + "</span><h2>" + esc(pe.objetivo) + '</h2><span class="muted">' + esc(pe.resumo) + "</span>" +
+    h += '<div class="card"><span class="label">' + esc(nomeDe(p)) + "</span><h2>" + esc(pe.objetivo) + "</h2>" +
       '<dl class="kv"><dt>Energia</dt><dd>' + pe.kcal.map((k, i) => (i + 1 === mes ? "<strong>Mês " + (i + 1) + ": " + esc(k) + "</strong>" : "Mês " + (i + 1) + ": " + esc(k))).join("<br>") + "</dd>" +
-      "<dt>Proteína</dt><dd>" + esc(pe.proteina) + "</dd><dt>Água</dt><dd>≈ " + aguaTotal.toFixed(1).replace(".", ",") + " L de água pura" + (p === "bea" ? " + o leite dos shakes" : " + 500 ml no treino") + "</dd>" +
+      "<dt>Proteína</dt><dd>" + esc(pe.proteina) + "</dd><dt>Água</dt><dd>≈ " + aguaTotal.toFixed(1).replace(".", ",") + " L de água pura" + (p === "a" ? " + o leite dos shakes" : " + 500 ml no treino") + "</dd>" +
       "<dt>Acompanhar</dt><dd>" + esc(pe.medida) + " · meta " + esc(pe.metaMedida) + "</dd></dl></div>";
-    h += '<div class="aviso">' + (p === "bea"
-      ? "<strong>Leve ao médico:</strong> glicose alta em quem está abaixo do peso pede investigação com endocrinologista (glicemia de jejum, hemoglobina glicada, insulina). A dificuldade de engolir pode ser avaliada por fonoaudióloga. Este plano é um ponto de partida para ser ajustado por nutricionista, não substitui."
+    h += '<div class="aviso">' + (p === "a"
+      ? "<strong>Leve ao médico:</strong> faça exames de sangue (glicemia de jejum, hemoglobina glicada) antes de começar e na semana 12. Este plano é um ponto de partida para ser ajustado por nutricionista, não substitui."
       : "<strong>Ponto de partida:</strong> as calorias são estimativas por fórmula. Se em 3 semanas a cintura não mudar, ou se a fome e o cansaço estiverem altos, ajuste com nutricionista.") + "</div>";
     h += '<h2>Refeições · horários fixos</h2>';
     for (const r of P.REFEICOES[p]) {
@@ -300,7 +302,7 @@
     const dataSabado = P.addDias(inicio(), (s - 1) * 7 - 2);
     let h = "<section>";
     h += '<div class="datebar"><button class="iconbtn" data-sem="-1" aria-label="Semana anterior"' + (s <= 1 ? " disabled" : "") + '>‹</button><div class="when"><strong>Semana ' + s + (s === sAtual ? " · atual" : "") + '</strong><span class="small muted">Comprar no sábado antes: ' + esc(fmtLonga(dataSabado)) + '</span></div><button class="iconbtn" data-sem="1" aria-label="Próxima semana"' + (s >= P.SEMANAS ? " disabled" : "") + ">›</button></div>";
-    h += '<div class="seg" role="group" aria-label="Filtrar por pessoa">' + [["todas", "Tudo"], ["bea", "Beatriz"], ["lo", "Lorena"]].map(([k, t]) => '<button data-filtro="' + k + '" aria-pressed="' + (k === filtro) + '">' + t + "</button>").join("") + "</div>";
+    h += '<div class="seg" role="group" aria-label="Filtrar por pessoa">' + [["todas", "Tudo"], ["a", nomeDe("a")], ["b", nomeDe("b")]].map(([k, t]) => '<button data-filtro="' + k + '" aria-pressed="' + (k === filtro) + '">' + t + "</button>").join("") + "</div>";
     h += '<div class="stack"><span><strong class="mono">' + n + " de " + todos.length + '</strong> no carrinho</span><div class="progress"><i style="width:' + (todos.length ? (n / todos.length) * 100 : 0) + '%"></i></div></div>';
     h += '<p class="small muted">' + (statusSync === "compartilhado" ? "Lista compartilhada: o que uma marca, a outra vê." : "As marcações ficam salvas neste aparelho.") + " Confira o estoque antes: o que já tem em casa, marque direto.</p>";
     for (const g of grupos) {
@@ -308,7 +310,7 @@
       for (const i of g.itens) {
         const on = !!feito[i.id];
         h += '<div class="compra' + (on ? " done" : "") + '"><button class="chk" data-compra="' + esc(i.id) + '" aria-pressed="' + on + '" aria-label="Marcar ' + esc(i.nome) + '">' + (on ? "✓" : "") + "</button>" +
-          '<div style="min-width:0"><span class="n">' + esc(i.nome) + '</span> <span class="tag ' + i.quem + '">' + (i.quem === "ambas" ? "as duas" : P.PESSOAS[i.quem].nome) + '</span><br><span class="q">' + esc(i.qtd) + "</span>" +
+          '<div style="min-width:0"><span class="n">' + esc(i.nome) + '</span> <span class="tag ' + i.quem + '">' + (i.quem === "ambas" ? "as duas" : esc(nomeDe(i.quem))) + '</span><br><span class="q">' + esc(i.qtd) + "</span>" +
           (i.nota ? ' <span class="small muted">· ' + esc(i.nota) + "</span>" : "") + "</div></div>";
       }
       h += "</div></div>";
@@ -329,7 +331,7 @@
     const ini = inicio();
     const hoje = hojeStr();
     let h = "<section>";
-    h += '<div class="card"><h2>12 semanas de ' + esc(pe.nome) + '</h2><span class="small muted">Cada quadrado é um dia. Quanto mais escuro, mais itens marcados.</span><div class="mapa" aria-label="Mapa de constância">';
+    h += '<div class="card"><h2>12 semanas de ' + esc(nomeDe(p)) + '</h2><span class="small muted">Cada quadrado é um dia. Quanto mais escuro, mais itens marcados.</span><div class="mapa" aria-label="Mapa de constância">';
     h += '<span></span>' + ["S", "T", "Q", "Q", "S", "S", "D"].map((d) => '<span class="hd">' + d + "</span>").join("");
     for (let s = 0; s < P.SEMANAS; s++) {
       h += '<span class="wk">S' + (s + 1) + "</span>";
@@ -343,7 +345,7 @@
     h += "</div></div>";
 
     const log = doc("log/" + p);
-    const campos = p === "bea" ? [["peso", "Peso (kg)"]] : [["peso", "Peso (kg)"], ["cintura", "Cintura (cm)"], ["braco", "Braço (cm)"]];
+    const campos = p === "a" ? [["peso", "Peso (kg)"]] : [["peso", "Peso (kg)"], ["cintura", "Cintura (cm)"], ["braco", "Braço (cm)"]];
     h += '<div class="card"><h3>Medidas de segunda-feira</h3><span class="small muted">' + esc(pe.medida) + ". Meta: " + esc(pe.metaMedida) + '.</span><div class="scroll-x"><table class="log"><thead><tr><th>Semana</th>' + campos.map((c) => "<th>" + c[1] + "</th>").join("") + "</tr></thead><tbody>";
     for (let s = 1; s <= P.SEMANAS; s++) {
       const linha = log["s" + s] || {};
@@ -352,9 +354,9 @@
     h += "</tbody></table></div></div>";
 
     h += '<div class="card"><h3>Fases do treino</h3><ul>' + P.FASES.map((f) => "<li><strong>Semanas " + f.semanas + " · " + esc(f.nome) + ":</strong> " + esc(f.texto) + "</li>").join("") + "</ul>" +
-      '<span class="small muted">Treinos: segunda A, terça B, quinta C, sexta D, às 19h15. As duas fazem o mesmo treino lado a lado; muda a carga e o final (Lorena faz cardio, Beatriz não).</span></div>';
+      '<span class="small muted">Treinos: segunda A, terça B, quinta C, sexta D, às 19h15. As duas fazem o mesmo treino lado a lado; muda a carga e o final (' + esc(nomeDe("b")) + ' faz cardio, ' + esc(nomeDe("a")) + ' não).</span></div>';
 
-    const nomeArq = p === "bea" ? "beatriz" : "lorena";
+    const nomeArq = "perfil-" + p;
     const padrao = ini === P.INICIO_PADRAO;
     h += '<div class="card"><h3>Lembretes no celular</h3><span>Uma página web não consegue tocar alarme com o celular bloqueado. O calendário do celular consegue. Importe um destes arquivos e cada item do dia vira um alarme no horário exato, até o fim das 12 semanas.</span>' +
       '<ul><li><strong>Essencial</strong> (17 alarmes): refeições, creatina, 3 pausas de banheiro, treino, compras e preparo. Comece por este.</li><li><strong>Completo</strong> (30 alarmes): inclui toda a água. Pode cansar; troque para o essencial se começar a ignorar.</li></ul>' +
@@ -363,10 +365,13 @@
         : '<button class="btn small" data-ics="1">Essencial (.ics)</button><button class="btn ghost small" data-ics="0">Completo (.ics)</button>') + "</div>" +
       '<span class="small muted">iPhone: abra o arquivo no Safari e toque em "Adicionar tudo". Android: importe pelo Google Agenda no computador (Configurações → Importar) e os alarmes chegam no celular.</span>' +
       (ui.icsTexto ? '<textarea class="copiar" readonly>' + esc(ui.icsTexto) + '</textarea><span class="small muted">Se o download não começou, copie o texto acima para um arquivo .ics.</span>' : "") +
-      '<label class="toggle" for="som"><span>Som e vibração com o app aberto</span><input type="checkbox" id="som"' + (prefs.som ? " checked" : "") + "></label>" +
+      '<label class="toggle" for="som"><span>Som e vibração com o app aberto</span><input type="checkbox" id="som"' + (prefs.som ? " checked" : "") + '><span class="sw" aria-hidden="true"></span></label>' +
       '<button class="btn ghost small" data-notif="1" style="align-self:flex-start">Ativar avisos do navegador</button>' + (ui.notifMsg ? '<span class="small muted">' + esc(ui.notifMsg) + "</span>" : "") + "</div>";
 
-    h += '<div class="card"><h3>Início do plano</h3><label class="small muted" for="inicio">Segunda-feira da semana 1</label><input type="date" id="inicio" value="' + esc(ini) + '" style="padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg)"><span class="small muted">Se escolher outro dia, o app usa a segunda daquela semana.</span></div>';
+    h += '<div class="card"><h3>Aparência</h3><div class="seg" role="group" aria-label="Tema">' +
+      [["sistema", "Igual ao celular"], ["light", "Claro"], ["dark", "Escuro"]].map(([k, t]) => '<button data-tema="' + k + '" aria-pressed="' + (temaAtual() === k) + '">' + t + "</button>").join("") + "</div></div>";
+    h += '<div class="card"><h3>Início e nomes</h3><label class="small muted" for="inicio">Segunda-feira da semana 1</label><input type="date" id="inicio" value="' + esc(ini) + '"><span class="small muted">Se escolher outro dia, o app usa a segunda daquela semana.</span>' +
+      ["a", "b"].map((k) => '<label class="small muted" for="nome-in-' + k + '">Nome do ' + P.PESSOAS[k].nome.toLowerCase() + '</label><input id="nome-in-' + k + '" data-nome="' + k + '" value="' + esc(((doc("config/geral").nomes || {})[k]) || "") + '" placeholder="' + P.PESSOAS[k].nome + '">').join("") + "</div>";
 
     h += '<div class="card"><h3>Como usar sem se cobrar</h3><ul>' +
       "<li>Abra só a aba Hoje. O cartão de cima diz a única coisa a fazer agora.</li>" +
@@ -385,9 +390,11 @@
     const ativo = document.activeElement;
     if (ativo && (ativo.tagName === "INPUT" && ativo.type !== "checkbox") && $("#view").contains(ativo)) { pendenteRender = true; return; }
     pendenteRender = false;
-    document.body.classList.toggle("p-lo", prefs.pessoa === "lo");
-    $("#btn-bea").setAttribute("aria-pressed", prefs.pessoa === "bea");
-    $("#btn-lo").setAttribute("aria-pressed", prefs.pessoa === "lo");
+    document.body.classList.toggle("p-b", prefs.pessoa === "b");
+    $("#btn-a").setAttribute("aria-pressed", prefs.pessoa === "a");
+    $("#btn-b").setAttribute("aria-pressed", prefs.pessoa === "b");
+    $("#nome-a").textContent = nomeDe("a");
+    $("#nome-b").textContent = nomeDe("b");
     document.querySelectorAll("nav.tabs button").forEach((b) => { if (b.dataset.tab === prefs.aba) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
     const comData = prefs.aba === "hoje" || prefs.aba === "treino";
     $("#datebar").hidden = !comData;
@@ -400,6 +407,32 @@
     const scroll = window.scrollY;
     $("#view").innerHTML = v();
     window.scrollTo(0, scroll);
+    pintarTema();
+    if (ui.pop) { const el = $('[data-toggle="' + ui.pop + '"], [data-set="' + ui.pop + '"], [data-compra="' + ui.pop + '"], [data-feito="' + ui.pop + '"]'); if (el) el.classList.add("pop"); ui.pop = null; }
+    if (ui.entrar) { const v = $("#view"); v.classList.remove("entra"); void v.offsetWidth; v.classList.add("entra"); ui.entrar = false; }
+  }
+
+  /* ---------- Tema ---------- */
+  const LS_TEMA = "rotina-da-casa:tema";
+  const ICONES_TEMA = {
+    sistema: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>',
+    light: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+    dark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>',
+  };
+  const NOMES_TEMA = { sistema: "igual ao celular", light: "claro", dark: "escuro" };
+  const temaAtual = () => ler(LS_TEMA, "sistema");
+  function definirTema(t) {
+    gravar(LS_TEMA, t);
+    if (t === "sistema") delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = t;
+    render();
+  }
+  function pintarTema() {
+    const t = temaAtual(), b = $("#tema");
+    b.innerHTML = ICONES_TEMA[t];
+    b.setAttribute("aria-label", "Tema: " + NOMES_TEMA[t] + ". Tocar para trocar.");
+    const m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.content = getComputedStyle(document.body).backgroundColor;
   }
 
   /* ---------- Eventos ---------- */
@@ -410,21 +443,30 @@
     const ds = b.dataset;
     const p = prefs.pessoa;
     if (ds.p) { prefs.pessoa = ds.p; salvarPrefs(); render(); return; }
-    if (ds.tab) { prefs.aba = ds.tab; salvarPrefs(); ui.textoCopia = ""; render(); window.scrollTo(0, 0); return; }
-    if (ds.ir) { prefs.aba = ds.ir; salvarPrefs(); render(); window.scrollTo(0, 0); return; }
-    if (b.id === "dia-ant" || b.id === "dia-prox") { ui.data = P.addDias(ui.data, b.id === "dia-ant" ? -1 : 1); render(); return; }
-    if (b.id === "toast-ok") { $("#toast").hidden = true; return; }
+    if (ds.tab || ds.ir) { prefs.aba = ds.tab || ds.ir; salvarPrefs(); ui.textoCopia = ""; ui.entrar = true; window.scrollTo(0, 0); render(); return; }
+    if (b.id === "dia-ant" || b.id === "dia-prox") { mudarDia(b.id === "dia-ant" ? -1 : 1); return; }
+    if (b.id === "dia-hoje") { if (ui.data !== hojeStr()) { ui.data = hojeStr(); ui.entrar = true; render(); } return; }
+    if (b.id === "tema") { const ordem = ["sistema", "light", "dark"]; definirTema(ordem[(ordem.indexOf(temaAtual()) + 1) % 3]); return; }
+    if (ds.tema) { definirTema(ds.tema); return; }
+    if (b.id === "toast-ok") { const f = ui.acaoToast; ui.acaoToast = null; fecharToast(); if (f) f(); return; }
     const path = diaPath(p, ui.data);
     if (ds.toggle || ds.feito) {
       const id = ds.toggle || ds.feito;
       const atual = !!(doc(path).feito || {})[id];
-      alterar(path, { feito: { [id]: ds.feito ? true : !atual } });
+      const novo = ds.feito ? true : !atual;
+      if (novo) { ui.pop = id; vibrar(); }
+      alterar(path, { feito: { [id]: novo } });
+      if (novo && !atual) {
+        const it = P.cronograma(p, ui.data, inicio()).itens.find((x) => x.id === id);
+        toast("Feito: " + (it ? it.titulo : ""), { rotulo: "Desfazer", fn: () => alterar(path, { feito: { [id]: false } }) }, 5000);
+      }
       return;
     }
     if (ds.letra) { alterar(path, { letra: ds.letra }); return; }
     if (ds.local) { prefs.local[p] = ds.local; salvarPrefs(); alterar(path, { local: ds.local }); return; }
     if (ds.set) {
       const on = !(doc(path).sets || {})[ds.set];
+      if (on) { ui.pop = ds.set; vibrar(); }
       alterar(path, { sets: { [ds.set]: on } });
       if (on) iniciarDescanso(ds.desc);
       conferirTreinoCompleto(p);
@@ -436,7 +478,9 @@
     if (ds.compra) {
       const s = ui.semanaCompras || P.semanaDoPlano(inicio(), hojeStr());
       const cp = "compras/s" + s;
-      alterar(cp, { feito: { [ds.compra]: !(doc(cp).feito || {})[ds.compra] } });
+      const on = !(doc(cp).feito || {})[ds.compra];
+      if (on) { ui.pop = ds.compra; vibrar(); }
+      alterar(cp, { feito: { [ds.compra]: on } });
       return;
     }
     if (ds.limpar) {
@@ -462,6 +506,7 @@
     const p = prefs.pessoa;
     if (t.id === "dificil") { alterar(diaPath(p, ui.data), { dificil: t.checked }); return; }
     if (t.id === "som") { prefs.som = t.checked; salvarPrefs(); return; }
+    if (t.dataset.nome) { alterar("config/geral", { nomes: { [t.dataset.nome]: t.value.trim() } }); return; }
     if (t.dataset.carga) { alterar("cargas/" + p, { [t.dataset.carga]: t.value.trim() }); return; }
     if (t.dataset.log) { alterar("log/" + p, { ["s" + t.dataset.log]: { [t.dataset.campo]: t.value.trim() } }); return; }
     if (t.id === "inicio" && t.value) {
@@ -504,10 +549,11 @@
   }
   function selecionarCopia() { const t = $("#copia"); if (t) { t.focus(); t.select(); } }
 
+  const nomeArq = (p) => nomeDe(p).toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "perfil-" + p;
   function baixarICS(essencial) {
     const p = prefs.pessoa;
-    const txt = P.gerarICS(p, inicio(), essencial);
-    const nome = "rotina-" + (p === "bea" ? "beatriz" : "lorena") + (essencial ? "-essencial" : "-completo") + ".ics";
+    const txt = P.gerarICS(p, inicio(), essencial, nomeDe(p));
+    const nome = "rotina-" + nomeArq(p) + (essencial ? "-essencial" : "-completo") + ".ics";
     try {
       const url = URL.createObjectURL(new Blob([txt], { type: "text/calendar" }));
       const a = document.createElement("a");
@@ -542,12 +588,32 @@
       });
     } catch (e) { /* sem som */ }
   }
-  function toast(txt) {
+  function toast(txt, acao, ms) {
+    clearInterval(ui.descanso);
+    ui.acaoToast = acao ? acao.fn : null;
+    $("#toast-ok").textContent = acao ? acao.rotulo : "Ok";
     $("#toast-txt").textContent = txt;
     $("#toast").hidden = false;
     clearTimeout(toast.t);
-    toast.t = setTimeout(() => ($("#toast").hidden = true), 12000);
+    toast.t = setTimeout(fecharToast, ms || 12000);
   }
+  function fecharToast() { clearInterval(ui.descanso); clearTimeout(toast.t); ui.acaoToast = null; $("#toast").hidden = true; }
+  const vibrar = () => { try { prefs.som && navigator.vibrate && navigator.vibrate(8); } catch (e) { /* sem vibração */ } };
+
+  /* ---------- Trocar de dia ---------- */
+  function mudarDia(n) { ui.data = P.addDias(ui.data, n); ui.entrar = true; render(); }
+  // Deslizar o dedo para os lados troca o dia (Hoje e Treino).
+  let toque = null;
+  document.addEventListener("touchstart", (e) => {
+    if (e.touches.length !== 1 || e.target.closest("input, textarea, .scroll-x, .seg, .sets")) { toque = null; return; }
+    toque = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, { passive: true });
+  document.addEventListener("touchend", (e) => {
+    if (!toque || (prefs.aba !== "hoje" && prefs.aba !== "treino")) return;
+    const dx = e.changedTouches[0].clientX - toque.x, dy = e.changedTouches[0].clientY - toque.y;
+    toque = null;
+    if (Math.abs(dx) > 80 && Math.abs(dy) < 50) mudarDia(dx < 0 ? 1 : -1);
+  }, { passive: true });
   async function pedirNotificacao() {
     try {
       if (!("Notification" in window)) throw new Error();
@@ -568,7 +634,7 @@
       disparados.add(k);
       toast(i.hora + " · " + i.titulo);
       tocar();
-      try { if ("Notification" in window && Notification.permission === "granted") new Notification(i.hora + " · " + i.titulo, { body: P.PESSOAS[p].nome, tag: k }); } catch (e) { /* sem notificação */ }
+      try { if ("Notification" in window && Notification.permission === "granted") new Notification(i.hora + " · " + i.titulo, { body: nomeDe(p), tag: k }); } catch (e) { /* sem notificação */ }
     }
     if (ui.data === hoje && prefs.aba === "hoje") render();
   }
@@ -588,9 +654,11 @@
       const r = Math.max(0, Math.round((fim - Date.now()) / 1000));
       $("#toast-txt").textContent = r ? "Descanso: " + Math.floor(r / 60) + ":" + String(r % 60).padStart(2, "0") : "Bora, próxima série.";
       $("#toast").hidden = false;
-      if (!r) { clearInterval(ui.descanso); tocar(); clearTimeout(toast.t); toast.t = setTimeout(() => ($("#toast").hidden = true), 4000); }
+      if (!r) { clearInterval(ui.descanso); tocar(); $("#toast-ok").textContent = "Ok"; clearTimeout(toast.t); toast.t = setTimeout(fecharToast, 4000); }
     };
     clearTimeout(toast.t);
+    ui.acaoToast = null;
+    $("#toast-ok").textContent = "Pular";
     tick();
     ui.descanso = setInterval(tick, 1000);
   }

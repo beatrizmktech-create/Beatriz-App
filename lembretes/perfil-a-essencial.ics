@@ -1,10 +1,10 @@
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Rotina Bea e Lo//PT-BR
+PRODID:-//Rotina da Casa//PT-BR
 CALSCALE:GREGORIAN
-X-WR-CALNAME:Rotina Beatriz (essencial)
+X-WR-CALNAME:Rotina Perfil A (essencial)
 BEGIN:VEVENT
-UID:bea-acordar-0700-0@rotina-bea-lo
+UID:a-acordar-0700-0@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261019T070000
 DTEND:20261019T070500
@@ -18,7 +18,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-ref_cafe-0730-1@rotina-bea-lo
+UID:a-ref_cafe-0730-1@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261019T073000
 DTEND:20261019T075000
@@ -35,7 +35,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-creatina-0735-2@rotina-bea-lo
+UID:a-creatina-0735-2@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261019T073500
 DTEND:20261019T074000
@@ -49,7 +49,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-ref_lanche1-1000-3@rotina-bea-lo
+UID:a-ref_lanche1-1000-3@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261019T100000
 DTEND:20261019T102000
@@ -65,7 +65,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-pausa-1200-4@rotina-bea-lo
+UID:a-pausa-1200-4@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261019T120000
 DTEND:20261019T120500
@@ -79,7 +79,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-ref_almoco-1215-5@rotina-bea-lo
+UID:a-ref_almoco-1215-5@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261019T121500
 DTEND:20261019T123500
@@ -98,7 +98,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-ref_lanche2-1530-6@rotina-bea-lo
+UID:a-ref_lanche2-1530-6@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261019T153000
 DTEND:20261019T155000
@@ -115,7 +115,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-agua5-1700-7@rotina-bea-lo
+UID:a-agua5-1700-7@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261019T170000
 DTEND:20261019T170500
@@ -129,7 +129,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-treino-1915-8@rotina-bea-lo
+UID:a-treino-1915-8@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261019T191500
 DTEND:20261019T200500
@@ -143,17 +143,17 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-ref_jantar-2015-9@rotina-bea-lo
+UID:a-ref_jantar-2015-9@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261019T201500
 DTEND:20261019T203500
 RRULE:FREQ=WEEKLY;BYDAY=MO,TU,TH,FR;UNTIL=20270111T235900
 SUMMARY:Jantar-sobremesa planejado
 DESCRIPTION:Achocolatado turbinado: 300 ml de leite\n+ 1 colher (sopa) de
-  cacau 100%\n+ achocolatado 3 Corações (quantidade da redução gradua
- l\, abaixo)\n+ 1 colher (sopa) de pasta de amendoim + 1 colher (sopa) de
-  aveia\, batido\n\nDia difícil: Leite com achocolatado. Melhor tomar al
- go do que pular o jantar.
+  cacau 100%\n+ achocolatado comum (quantidade da redução gradual\, aba
+ ixo)\n+ 1 colher (sopa) de pasta de amendoim + 1 colher (sopa) de aveia\
+ , batido\n\nDia difícil: Leite com achocolatado. Melhor tomar algo do q
+ ue pular o jantar.
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Jantar-sobremesa planejado
@@ -161,7 +161,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-amanha-2230-10@rotina-bea-lo
+UID:a-amanha-2230-10@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261019T223000
 DTEND:20261019T223500
@@ -176,7 +176,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-treino-1915-11@rotina-bea-lo
+UID:a-treino-1915-11@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261020T191500
 DTEND:20261020T200500
@@ -190,17 +190,17 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-ref_jantar-2000-12@rotina-bea-lo
+UID:a-ref_jantar-2000-12@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261021T200000
 DTEND:20261021T202000
 RRULE:FREQ=WEEKLY;BYDAY=WE,SA,SU;UNTIL=20270111T235900
 SUMMARY:Jantar-sobremesa planejado
 DESCRIPTION:Achocolatado turbinado: 300 ml de leite\n+ 1 colher (sopa) de
-  cacau 100%\n+ achocolatado 3 Corações (quantidade da redução gradua
- l\, abaixo)\n+ 1 colher (sopa) de pasta de amendoim + 1 colher (sopa) de
-  aveia\, batido\n\nDia difícil: Leite com achocolatado. Melhor tomar al
- go do que pular o jantar.
+  cacau 100%\n+ achocolatado comum (quantidade da redução gradual\, aba
+ ixo)\n+ 1 colher (sopa) de pasta de amendoim + 1 colher (sopa) de aveia\
+ , batido\n\nDia difícil: Leite com achocolatado. Melhor tomar algo do q
+ ue pular o jantar.
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Jantar-sobremesa planejado
@@ -208,7 +208,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-treino-1915-13@rotina-bea-lo
+UID:a-treino-1915-13@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261022T191500
 DTEND:20261022T200500
@@ -222,7 +222,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-treino-1915-14@rotina-bea-lo
+UID:a-treino-1915-14@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261023T191500
 DTEND:20261023T200500
@@ -236,7 +236,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-compras-1030-15@rotina-bea-lo
+UID:a-compras-1030-15@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261024T103000
 DTEND:20261024T103500
@@ -250,7 +250,7 @@ TRIGGER:PT0M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bea-preparo-1600-16@rotina-bea-lo
+UID:a-preparo-1600-16@rotina-da-casa
 DTSTAMP:20261014T120000Z
 DTSTART:20261025T160000
 DTEND:20261025T160500

@@ -1,0 +1,11 @@
+{
+  "name": "rotina-da-casa",
+  "private": true,
+  "scripts": {
+    "css": "tailwindcss -c tailwind.config.js -i src/estilo.css -o styles.css --minify",
+    "lembretes": "node scripts/gerar-ics.mjs"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

@@ -12,7 +12,7 @@ if (P.parseData(inicio).getDay() !== 1) {
   process.exit(1);
 }
 mkdirSync(new URL("lembretes/", raiz), { recursive: true });
-for (const [id, nome] of [["bea", "beatriz"], ["lo", "lorena"]]) {
+for (const [id, nome] of [["a", "perfil-a"], ["b", "perfil-b"]]) {
   for (const [ess, suf] of [[false, "completo"], [true, "essencial"]]) {
     const f = new URL(`lembretes/${nome}-${suf}.ics`, raiz);
     const txt = P.gerarICS(id, inicio, ess);

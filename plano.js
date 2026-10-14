@@ -1,4 +1,4 @@
-/* Plano de 12 semanas — Beatriz e Lorena.
+/* Plano de 12 semanas para dois perfis (A: ganho de peso e músculo; B: perda de gordura).
  * Arquivo só de dados + funções puras. Usado pelo app (index.html) e pelo
  * gerador de lembretes (scripts/gerar-ics.mjs). Para mudar um horário,
  * uma refeição ou um exercício, edite aqui. */
@@ -9,11 +9,10 @@
   const INICIO_PADRAO = "2026-10-19"; // segunda-feira
 
   const PESSOAS = {
-    bea: {
-      id: "bea",
-      nome: "Beatriz",
-      resumo: "26 anos · 44 kg · 1,55 m · IMC 18,3 (abaixo do ideal)",
-      objetivo: "Ganhar peso e músculo e baixar a glicose",
+    a: {
+      id: "a",
+      nome: "Perfil A",
+      objetivo: "Ganhar peso e músculo",
       kcal: ["≈ 2.200 kcal", "≈ 2.400 kcal", "≈ 2.550 kcal"],
       proteina: "90–110 g/dia",
       aguaMl: 200,
@@ -21,10 +20,9 @@
       medida: "Peso em jejum, depois do banheiro",
       metaMedida: "+0,2 a 0,4 kg por semana",
     },
-    lo: {
-      id: "lo",
-      nome: "Lorena",
-      resumo: "25 anos · 63 kg · 1,67 m · IMC 22,6",
+    b: {
+      id: "b",
+      nome: "Perfil B",
       objetivo: "Perder gordura e firmar o corpo",
       kcal: ["≈ 1.750 kcal", "≈ 1.750 kcal", "≈ 1.650–1.750 kcal"],
       proteina: "115–125 g/dia",
@@ -38,7 +36,7 @@
   /* ---------- Dieta ---------- */
   // hora: horário fixo. min: versão mínima para dia difícil.
   const REFEICOES = {
-    bea: [
+    a: [
       {
         id: "cafe", hora: "07:30", nome: "Café da manhã reforçado", kcal: 525,
         itens: [
@@ -66,7 +64,7 @@
           "1 colher (sopa) de pasta de amendoim",
         ],
         trocas: [
-          "Versão glicose baixa: troque a banana por ½ xícara de frutas vermelhas congeladas + ¼ de abacate",
+          "Versão com menos açúcar: troque a banana por ½ xícara de frutas vermelhas congeladas + ¼ de abacate",
           "Versão chocolate: + 1 colher (chá) de cacau 100%",
         ],
         min: "Leite + whey batidos. Só isso já conta.",
@@ -91,7 +89,7 @@
         min: "Sopa creme ou 1 copo de leite + 1 ovo. Se não descer nada, faça o shake.",
         mes2: "+1 colher (sopa) de azeite no prato",
         mes3: "+1 colher de proteína",
-        dica: "Coma na ordem: legume → proteína → arroz/feijão por último. Essa ordem reduz o pico de glicose.",
+        dica: "Coma na ordem: legume → proteína → arroz/feijão por último. Essa ordem reduz o pico de açúcar no sangue.",
       },
       {
         id: "lanche2", hora: "15:30", nome: "Lanche da tarde", kcal: 250,
@@ -124,7 +122,7 @@
         itens: [
           "Achocolatado turbinado: 300 ml de leite",
           "+ 1 colher (sopa) de cacau 100%",
-          "+ achocolatado 3 Corações (quantidade da redução gradual, abaixo)",
+          "+ achocolatado comum (quantidade da redução gradual, abaixo)",
           "+ 1 colher (sopa) de pasta de amendoim + 1 colher (sopa) de aveia, batido",
         ],
         trocas: [
@@ -147,7 +145,7 @@
         dica: "",
       },
     ],
-    lo: [
+    b: [
       {
         id: "cafe", hora: "07:30", nome: "Café da manhã", kcal: 400,
         itens: [
@@ -235,13 +233,13 @@
   };
 
   const SUPLEMENTOS = {
-    bea: [
+    a: [
       ["Whey", "1 dose no shake das 10h (você já usa)."],
       ["Creatina monohidratada", "3 g por dia, todo dia, no café. Ajuda no ganho de músculo e força. Não precisa de ciclo."],
-      ["Fórmula nutricional completa", "Se os shakes não estiverem acontecendo, peça a uma nutricionista uma fórmula pronta para controle de glicose. Evite \"hipercalórico\" de academia: quase todos são maltodextrina, que sobe a glicose."],
+      ["Fórmula nutricional completa", "Se os shakes não estiverem acontecendo, peça a uma nutricionista uma fórmula pronta de baixo índice glicêmico. Evite \"hipercalórico\" de academia: quase todos são maltodextrina, que sobe a glicose."],
       ["Vitamina D, B12, ferro", "Só com exame de sangue. Não tome no escuro."],
     ],
-    lo: [
+    b: [
       ["Whey", "1 dose às 15h30. Fecha a proteína do dia sem precisar de refeição grande."],
       ["Creatina monohidratada", "5 g por dia, todo dia. Pode subir 0,5–1 kg na balança na 1ª semana: é água no músculo, não gordura. Por isso a medida principal é a cintura."],
       ["Termogênicos e chás \"detox\"", "Não use. Pioram sono e ansiedade e não tiram gordura localizada."],
@@ -373,7 +371,7 @@
   }
 
   function finalTreino(pessoa, letra, semana, local) {
-    if (pessoa === "bea") {
+    if (pessoa === "a") {
       return "Sem cardio extra (seu objetivo é ganhar peso). 5 min de alongamento e vá jantar.";
     }
     const f = fase(semana).n;
@@ -454,15 +452,15 @@
       meal("jantar", "20:15");
     } else {
       add("19:00", "fim", "banheiro", fimSemana ? "Banheiro + água" : "Fim do expediente: banheiro + água", "", false);
-      if (pessoaId === "lo" && dow === 3) add("19:15", "caminhada", "treino", "Caminhada 30 min (ou 8.000 passos no dia)", "Dia sem academia, mas o corpo se mexe.", false);
+      if (pessoaId === "b" && dow === 3) add("19:15", "caminhada", "treino", "Caminhada 30 min (ou 8.000 passos no dia)", "Dia sem academia, mas o corpo se mexe.", false);
       meal("jantar", "20:00");
-      if (pessoaId === "bea") add("20:40", "caminhada", "treino", "Caminhada leve 10 min depois do jantar", "Andar depois de comer ajuda a baixar a glicose.", false);
+      if (pessoaId === "a") add("20:40", "caminhada", "treino", "Caminhada leve 10 min depois do jantar", "Andar depois de comer reduz o pico de açúcar no sangue.", false);
     }
     add("21:00", "agua6", "agua", "Água " + ml + " ml", "", false);
     meal("ceia");
     if (dow === 6) add("10:30", "compras", "org", "Compras da semana", "Lista pronta na aba Compras. Vão juntas.", true);
     if (dow === 0) add("16:00", "preparo", "org", "Preparo da semana (1h30, juntas)", "Assar frango e batata-doce, desfiar frango, cozinhar legumes, montar 10 marmitas iguais, congelar 7 bananas em rodelas, porcionar o whey em potinhos.", true);
-    add("22:30", "amanha", "org", "Deixar amanhã pronto", "Marmita na frente da geladeira, garrafa cheia, copo ao lado da cama" + (pessoaId === "bea" ? ", ingredientes do shake juntos." : "."), true);
+    add("22:30", "amanha", "org", "Deixar amanhã pronto", "Marmita na frente da geladeira, garrafa cheia, copo ao lado da cama" + (pessoaId === "a" ? ", ingredientes do shake juntos." : "."), true);
     add("22:45", "telas", "sono", "Telas desligadas, luz baixa", "Dormir às 23h para acordar às 7h com 8 h de sono.", false);
 
     it.sort((a, b) => a.hora.localeCompare(b.hora));
@@ -470,65 +468,65 @@
   }
 
   /* ---------- Compras ---------- */
-  // quem: bea | lo | ambas. semanas: "todas" | "impar" | "par" | "mensal" (1, 5, 9) | "inicio" (1)
+  // quem: a | b | ambas. semanas: "todas" | "impar" | "par" | "mensal" (1, 5, 9) | "inicio" (1)
   const COMPRAS = [
     ["Ovos e laticínios", [
-      ["ovos", "Ovos", "4 dúzias", "ambas", "todas", "Lorena ≈ 24, Beatriz ≈ 16, sobra para emergência."],
-      ["leite_int", "Leite integral", "7 litros", "bea", "todas", "Shake, jantar, ceia e café."],
-      ["leite_desn", "Leite desnatado", "2 litros", "lo", "todas", ""],
-      ["iog_int", "Iogurte natural integral (170 g)", "7 unidades", "bea", "todas", ""],
-      ["iog_lo", "Iogurte natural desnatado ou proteico", "7 unidades", "lo", "todas", ""],
-      ["mussarela", "Muçarela fatiada", "200 g", "bea", "todas", ""],
+      ["ovos", "Ovos", "4 dúzias", "ambas", "todas", "Perfil B ≈ 24, perfil A ≈ 16, sobra para emergência."],
+      ["leite_int", "Leite integral", "7 litros", "a", "todas", "Shake, jantar, ceia e café."],
+      ["leite_desn", "Leite desnatado", "2 litros", "b", "todas", ""],
+      ["iog_int", "Iogurte natural integral (170 g)", "7 unidades", "a", "todas", ""],
+      ["iog_b", "Iogurte natural desnatado ou proteico", "7 unidades", "b", "todas", ""],
+      ["mussarela", "Muçarela fatiada", "200 g", "a", "todas", ""],
       ["minas", "Queijo minas frescal", "400 g", "ambas", "todas", ""],
-      ["ricota", "Ricota ou requeijão light", "1 unidade", "bea", "par", ""],
+      ["ricota", "Ricota ou requeijão light", "1 unidade", "a", "par", ""],
     ]],
     ["Proteínas", [
-      ["frango", "Peito de frango", "1,5 kg", "ambas", "impar", "1 kg Lorena, 500 g para desfiar para a Beatriz."],
+      ["frango", "Peito de frango", "1,5 kg", "ambas", "impar", "1 kg perfil B, 500 g para desfiar (perfil A)."],
       ["frango_p", "Peito de frango", "1,3 kg", "ambas", "par", ""],
-      ["patinho", "Patinho (bife ou moído)", "700 g", "lo", "impar", ""],
-      ["tilapia", "Filé de tilápia", "500 g", "ambas", "par", "Beatriz: peixe desfiado no molho, se descer."],
-      ["lombo", "Lombo ou filé suíno", "400 g", "lo", "par", ""],
+      ["patinho", "Patinho (bife ou moído)", "700 g", "b", "impar", ""],
+      ["tilapia", "Filé de tilápia", "500 g", "ambas", "par", "Perfil A: peixe desfiado no molho, se for bem aceito."],
+      ["lombo", "Lombo ou filé suíno", "400 g", "b", "par", ""],
       ["atum", "Atum em lata (em água)", "2 latas", "ambas", "todas", "Proteína de emergência."],
     ]],
     ["Frutas, legumes e verduras", [
       ["banana", "Banana", "14 unidades", "ambas", "todas", "Congelar 7 em rodelas para o shake."],
       ["mamao", "Mamão formosa", "1 unidade", "ambas", "todas", ""],
       ["morango", "Morango", "2 caixas", "ambas", "todas", ""],
-      ["maca", "Maçã", "5 unidades", "lo", "todas", ""],
-      ["abacate", "Abacate", "1 unidade", "bea", "todas", "Mês 3: 2 unidades."],
-      ["batata_doce", "Batata-doce", "1,2 kg", "lo", "todas", ""],
-      ["abobora", "Abóbora cabotiá", "1 pedaço (≈ 800 g)", "ambas", "impar", "Purê da Beatriz e carboidrato da Lorena."],
+      ["maca", "Maçã", "5 unidades", "b", "todas", ""],
+      ["abacate", "Abacate", "1 unidade", "a", "todas", "Mês 3: 2 unidades."],
+      ["batata_doce", "Batata-doce", "1,2 kg", "b", "todas", ""],
+      ["abobora", "Abóbora cabotiá", "1 pedaço (≈ 800 g)", "ambas", "impar", "Purê do perfil A e carboidrato do perfil B."],
       ["mandioca", "Mandioca congelada", "1 pacote (500 g)", "ambas", "par", ""],
       ["cenoura", "Cenoura", "6 unidades", "ambas", "todas", ""],
       ["abobrinha", "Abobrinha", "3 unidades", "ambas", "todas", ""],
-      ["brocolis", "Brócolis (ou 1 pacote congelado)", "2 maços", "lo", "todas", ""],
-      ["tomate", "Tomate", "6 unidades", "lo", "todas", ""],
-      ["folhas", "Alface ou rúcula", "1 maço", "lo", "todas", ""],
-      ["espinafre", "Espinafre", "1 maço", "lo", "impar", "Para o omelete."],
+      ["brocolis", "Brócolis (ou 1 pacote congelado)", "2 maços", "b", "todas", ""],
+      ["tomate", "Tomate", "6 unidades", "b", "todas", ""],
+      ["folhas", "Alface ou rúcula", "1 maço", "b", "todas", ""],
+      ["espinafre", "Espinafre", "1 maço", "b", "impar", "Para o omelete."],
       ["cebola", "Cebola e alho", "1 kg + 1 cabeça", "ambas", "impar", ""],
       ["limao", "Limão", "4 unidades", "ambas", "todas", ""],
     ]],
     ["Mercearia", [
       ["pao", "Pão integral (3 g de fibra ou mais por fatia)", "2 pacotes", "ambas", "todas", ""],
-      ["pasta_amend", "Pasta de amendoim integral, sem açúcar", "1 pote (500 g)", "bea", "todas", ""],
-      ["aveia", "Aveia em flocos", "500 g", "bea", "impar", "Dura 2 semanas."],
+      ["pasta_amend", "Pasta de amendoim integral, sem açúcar", "1 pote (500 g)", "a", "todas", ""],
+      ["aveia", "Aveia em flocos", "500 g", "a", "impar", "Dura 2 semanas."],
       ["castanhas", "Castanhas (caju ou pará)", "200 g", "ambas", "todas", ""],
       ["chia", "Chia", "200 g", "ambas", "impar", ""],
-      ["granola", "Granola sem açúcar", "250 g", "bea", "impar", ""],
-      ["arroz", "Arroz (parboilizado ou integral)", "1 kg", "bea", "mensal", ""],
-      ["feijao", "Feijão", "1 kg", "bea", "mensal", ""],
-      ["tapioca", "Goma de tapioca", "500 g", "lo", "mensal", ""],
-      ["cacau", "Cacau em pó 100%", "200 g", "bea", "mensal", "Substitui aos poucos o achocolatado."],
+      ["granola", "Granola sem açúcar", "250 g", "a", "impar", ""],
+      ["arroz", "Arroz (parboilizado ou integral)", "1 kg", "a", "mensal", ""],
+      ["feijao", "Feijão", "1 kg", "a", "mensal", ""],
+      ["tapioca", "Goma de tapioca", "500 g", "b", "mensal", ""],
+      ["cacau", "Cacau em pó 100%", "200 g", "a", "mensal", "Substitui aos poucos o achocolatado."],
       ["azeite", "Azeite extra virgem", "500 ml", "ambas", "mensal", ""],
       ["adocante", "Adoçante (stévia ou sucralose)", "1 unidade", "ambas", "mensal", ""],
-      ["canela", "Canela em pó", "1 unidade", "bea", "mensal", ""],
+      ["canela", "Canela em pó", "1 unidade", "a", "mensal", ""],
       ["cafe", "Café", "500 g", "ambas", "mensal", ""],
-      ["achocolatado", "Achocolatado 3 Corações", "não repor", "bea", "mensal", "Use o pote que já tem; a meta é reduzir."],
+      ["achocolatado", "Achocolatado", "não repor", "a", "mensal", "Use o pote que já tem; a meta é reduzir."],
     ]],
     ["Congelados e doces", [
-      ["frutas_verm", "Frutas vermelhas congeladas", "300 g", "bea", "todas", "Shake com menos açúcar."],
-      ["sorvete", "Sorvete zero açúcar", "1 pote", "lo", "par", ""],
-      ["gelatina", "Gelatina zero", "4 caixinhas", "lo", "todas", ""],
+      ["frutas_verm", "Frutas vermelhas congeladas", "300 g", "a", "todas", "Shake com menos açúcar."],
+      ["sorvete", "Sorvete zero açúcar", "1 pote", "b", "par", ""],
+      ["gelatina", "Gelatina zero", "4 caixinhas", "b", "todas", ""],
       ["choc70", "Chocolate 70%", "1 barra (80–100 g)", "ambas", "impar", ""],
     ]],
     ["Suplementos (a cada 4 semanas)", [
@@ -540,7 +538,7 @@
       ["marmitas", "Potes de marmita iguais", "10 unidades", "ambas", "inicio", ""],
       ["potinhos", "Potinhos pequenos para porcionar whey", "14 unidades", "ambas", "inicio", ""],
       ["balanca", "Balança de cozinha", "1 unidade", "ambas", "inicio", "Só nas 2 primeiras semanas, para calibrar o olho."],
-      ["fita", "Fita métrica", "1 unidade", "lo", "inicio", ""],
+      ["fita", "Fita métrica", "1 unidade", "b", "inicio", ""],
       ["elastico", "Elástico de resistência para barra", "1 unidade", "ambas", "inicio", "Ajuda a fazer a barra fixa completa."],
     ]],
   ];
@@ -567,7 +565,7 @@
   // O calendário do celular toca o alarme mesmo com o app fechado,
   // coisa que uma página web não consegue garantir.
   const BYDAY = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"];
-  function gerarICS(pessoaId, inicio, so_essenciais) {
+  function gerarICS(pessoaId, inicio, so_essenciais, nomeCal) {
     const p = PESSOAS[pessoaId];
     const grupos = new Map();
     for (let i = 0; i < 7; i++) {
@@ -593,8 +591,8 @@
       return out + linha;
     };
     const L = [
-      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Rotina Bea e Lo//PT-BR", "CALSCALE:GREGORIAN",
-      "X-WR-CALNAME:Rotina " + p.nome + (so_essenciais ? " (essencial)" : ""),
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Rotina da Casa//PT-BR", "CALSCALE:GREGORIAN",
+      "X-WR-CALNAME:Rotina " + (nomeCal || p.nome) + (so_essenciais ? " (essencial)" : ""),
     ];
     let n = 0;
     for (const { it, primeiro, dias } of grupos.values()) {
@@ -608,7 +606,7 @@
       const regra = dias.length === 7 ? "FREQ=DAILY" : "FREQ=WEEKLY;BYDAY=" + dias.map((d) => BYDAY[d]).join(",");
       L.push(
         "BEGIN:VEVENT",
-        "UID:" + pessoaId + "-" + it.id + "-" + it.hora.replace(":", "") + "-" + (n++) + "@rotina-bea-lo",
+        "UID:" + pessoaId + "-" + it.id + "-" + it.hora.replace(":", "") + "-" + (n++) + "@rotina-da-casa",
         "DTSTAMP:20261014T120000Z",
         "DTSTART:" + ini, "DTEND:" + fimStr,
         "RRULE:" + regra + ";UNTIL=" + fim,
