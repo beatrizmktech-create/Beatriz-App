@@ -2,29 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Layout: uma coluna de bolso, cartões macios, barra de abas flutuante embaixo.
+/* Paleta: Rouge Noir, Blue Coral, Cognac, White Sand, Anthracite (tons clareados no tema escuro).
+   Layout: uma coluna de bolso, cartões macios, barra de abas flutuante embaixo.
    Fontes escolhidas por legibilidade (Atkinson Hyperlegible para leitura, Lexend para títulos). */
 :root {
-  --bg: #f6f5f8; --surface: #ffffff; --sunk: #eeedf2; --fg: #22212b; --muted: #6b6878; --line: #e4e2ea;
-  --pa: #8a4f86; --pa-soft: #f4e9f3; --pb: #2a7d76; --pb-soft: #e2f2ef;
-  --done: #3f8f5a; --done-soft: #e8f4ec; --late: #8a5a00; --late-soft: #fcf1dc;
-  --accent: var(--pa); --accent-soft: var(--pa-soft); --on-accent: #ffffff;
-  --shadow: rgb(34 33 43 / .05); --shadow-strong: rgb(34 33 43 / .18); --glass: rgb(255 255 255 / .78);
+  --bg: #e7e3dd; --surface: #f4f1ec; --sunk: #dcd7cf; --fg: #1b1b1f; --muted: #5f5a56; --line: #d2ccc3;
+  --pa: #5b0d18; --pa-soft: #ecdcd9; --pb: #083b3a; --pb-soft: #d5e1dd;
+  --done: #1b1b1f; --done-soft: #dcd7cf; --late: #8a4e2a; --late-soft: #efe0d3;
+  --accent: var(--pa); --accent-soft: var(--pa-soft); --on-accent: #f4f1ec;
+  --shadow: rgb(27 27 31 / .05); --shadow-strong: rgb(27 27 31 / .16); --glass: rgb(231 227 221 / .82);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #131218; --surface: #1c1b23; --sunk: #26252e; --fg: #ecebf1; --muted: #a6a3b3; --line: #302e39;
-    --pa: #e1aedb; --pa-soft: #34263a; --pb: #86d2c8; --pb-soft: #1d3432;
-    --done: #92d3a6; --done-soft: #1f3226; --late: #f0c36a; --late-soft: #382e19;
-    --on-accent: #131218; --shadow: rgb(0 0 0 / .3); --shadow-strong: rgb(0 0 0 / .55); --glass: rgb(28 27 35 / .78);
+    --bg: #1b1b1f; --surface: #242429; --sunk: #2e2e34; --fg: #e7e3dd; --muted: #a8a39c; --line: #38383f;
+    --pa: #d98a92; --pa-soft: #3a1b21; --pb: #7fb8b3; --pb-soft: #133130;
+    --done: #e7e3dd; --done-soft: #2a2a30; --late: #d9a27d; --late-soft: #33261d;
+    --on-accent: #1b1b1f; --shadow: rgb(0 0 0 / .3); --shadow-strong: rgb(0 0 0 / .55); --glass: rgb(27 27 31 / .82);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #131218; --surface: #1c1b23; --sunk: #26252e; --fg: #ecebf1; --muted: #a6a3b3; --line: #302e39;
-  --pa: #e1aedb; --pa-soft: #34263a; --pb: #86d2c8; --pb-soft: #1d3432;
-  --done: #92d3a6; --done-soft: #1f3226; --late: #f0c36a; --late-soft: #382e19;
-  --on-accent: #131218; --shadow: rgb(0 0 0 / .3); --shadow-strong: rgb(0 0 0 / .55); --glass: rgb(28 27 35 / .78);
+  --bg: #1b1b1f; --surface: #242429; --sunk: #2e2e34; --fg: #e7e3dd; --muted: #a8a39c; --line: #38383f;
+  --pa: #d98a92; --pa-soft: #3a1b21; --pb: #7fb8b3; --pb-soft: #133130;
+  --done: #e7e3dd; --done-soft: #2a2a30; --late: #d9a27d; --late-soft: #33261d;
+  --on-accent: #1b1b1f; --shadow: rgb(0 0 0 / .3); --shadow-strong: rgb(0 0 0 / .55); --glass: rgb(27 27 31 / .82);
   color-scheme: dark;
 }
 :root[data-theme="light"] { color-scheme: light; }
@@ -85,7 +86,7 @@ html, body { background: var(--bg); color: var(--fg); }
   .btn.small { @apply min-h-[40px] rounded-xl px-4 py-2 text-[.95rem]; }
 
   .progress { @apply h-2.5 overflow-hidden rounded-full bg-sunk; }
-  .progress > i { @apply block h-full rounded-full bg-done; transition: width .6s cubic-bezier(.22,1,.36,1); }
+  .progress > i { @apply block h-full rounded-full bg-accent; transition: width .6s cubic-bezier(.22,1,.36,1); }
 
   .toggle { @apply flex cursor-pointer items-center justify-between gap-3 rounded-3xl bg-surface p-4 shadow-soft; }
   .toggle input { @apply sr-only; }

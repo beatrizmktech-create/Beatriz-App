@@ -331,14 +331,14 @@
     const ini = inicio();
     const hoje = hojeStr();
     let h = "<section>";
-    h += '<div class="card"><h2>12 semanas de ' + esc(nomeDe(p)) + '</h2><span class="small muted">Cada quadrado é um dia. Quanto mais escuro, mais itens marcados.</span><div class="mapa" aria-label="Mapa de constância">';
+    h += '<div class="card"><h2>12 semanas de ' + esc(nomeDe(p)) + '</h2><span class="small muted">Cada quadrado é um dia. Quanto mais forte a cor, mais itens marcados.</span><div class="mapa" aria-label="Mapa de constância">';
     h += '<span></span>' + ["S", "T", "Q", "Q", "S", "S", "D"].map((d) => '<span class="hd">' + d + "</span>").join("");
     for (let s = 0; s < P.SEMANAS; s++) {
       h += '<span class="wk">S' + (s + 1) + "</span>";
       for (let d = 0; d < 7; d++) {
         const data = P.addDias(ini, s * 7 + d);
         const pct = pctDia(p, data);
-        const cor = pct == null || pct === 0 ? "" : "background:color-mix(in srgb, var(--done) " + Math.round(25 + pct * 75) + "%, var(--sunk))";
+        const cor = pct == null || pct === 0 ? "" : "background:color-mix(in srgb, var(--accent) " + Math.round(25 + pct * 75) + "%, var(--sunk))";
         h += '<span class="c' + (data === hoje ? " hoje" : "") + '" style="' + cor + '" title="' + esc(fmtLonga(data)) + (pct != null ? " · " + Math.round(pct * 100) + "%" : "") + '"></span>';
       }
     }
