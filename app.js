@@ -320,6 +320,9 @@
   }
 
   /* ---------- Plano ---------- */
+  // Dentro do claude.ai (iframe) arquivos .ics não são servidos: aponta para o GitHub.
+  const emIframe = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+  const BASE_ICS = emIframe ? "https://raw.githubusercontent.com/beatrizmktech-create/Beatriz-App/claude/neurodivergent-diet-workout-app-c3oe0d/lembretes/" : "lembretes/";
   function vPlano() {
     const p = prefs.pessoa;
     const pe = P.PESSOAS[p];
@@ -356,7 +359,7 @@
     h += '<div class="card"><h3>Lembretes no celular</h3><span>Uma página web não consegue tocar alarme com o celular bloqueado. O calendário do celular consegue. Importe um destes arquivos e cada item do dia vira um alarme no horário exato, até o fim das 12 semanas.</span>' +
       '<ul><li><strong>Essencial</strong> (17 alarmes): refeições, creatina, 3 pausas de banheiro, treino, compras e preparo. Comece por este.</li><li><strong>Completo</strong> (30 alarmes): inclui toda a água. Pode cansar; troque para o essencial se começar a ignorar.</li></ul>' +
       '<div class="row">' + (padrao
-        ? '<a class="btn small" href="lembretes/' + nomeArq + '-essencial.ics">Essencial (.ics)</a><a class="btn ghost small" href="lembretes/' + nomeArq + '-completo.ics">Completo (.ics)</a>'
+        ? '<a class="btn small" href="' + BASE_ICS + nomeArq + '-essencial.ics">Essencial (.ics)</a><a class="btn ghost small" href="' + BASE_ICS + nomeArq + '-completo.ics">Completo (.ics)</a>'
         : '<button class="btn small" data-ics="1">Essencial (.ics)</button><button class="btn ghost small" data-ics="0">Completo (.ics)</button>') + "</div>" +
       '<span class="small muted">iPhone: abra o arquivo no Safari e toque em "Adicionar tudo". Android: importe pelo Google Agenda no computador (Configurações → Importar) e os alarmes chegam no celular.</span>' +
       (ui.icsTexto ? '<textarea class="copiar" readonly>' + esc(ui.icsTexto) + '</textarea><span class="small muted">Se o download não começou, copie o texto acima para um arquivo .ics.</span>' : "") +
