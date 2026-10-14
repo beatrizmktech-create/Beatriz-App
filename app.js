@@ -140,6 +140,9 @@
     const feitos = c.visiveis.filter((i) => c.feito[i.id]).length;
     const total = c.visiveis.length;
     let h = "<section>";
+    if (!emIframe && !instalado() && !prefs.semDicaInstalar && ehHoje) {
+      h += '<div class="card"><div class="row" style="justify-content:space-between"><span><strong>Instale no celular</strong><br><span class="small muted">Ícone na tela inicial e funciona sem internet.</span></span><span class="row"><button class="btn small" data-ir="plano">Como</button><button class="btn ghost small" data-semdica="1">Agora não</button></span></div></div>';
+    }
     if (c.dia < 0) {
       h += '<div class="aviso">O plano começa ' + esc(fmtLonga(inicio())) + ". Esta semana é de preparação: compras da semana 1 e itens de organização (aba Compras). Abaixo, como será um dia assim.</div>";
     } else if (c.dia >= P.SEMANAS * 7) {
@@ -325,6 +328,25 @@
   // Dentro do claude.ai (iframe) arquivos .ics não são servidos: aponta para o GitHub.
   const emIframe = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
   const BASE_ICS = emIframe ? "https://raw.githubusercontent.com/beatrizmktech-create/Beatriz-App/claude/neurodivergent-diet-workout-app-c3oe0d/lembretes/" : "lembretes/";
+  /* ---------- Instalar como app ---------- */
+  const instalado = () => { try { return matchMedia("(display-mode: standalone)").matches || navigator.standalone === true; } catch (e) { return false; } };
+  const ehIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  let pedidoInstalar = null;
+  window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); pedidoInstalar = e; render(); });
+  window.addEventListener("appinstalled", () => { pedidoInstalar = null; toast("App instalado. Abra pelo ícone na tela inicial."); render(); });
+  function cartaoInstalar() {
+    if (emIframe || instalado()) return "";
+    let h = '<div class="card"><h3>Instalar no celular</h3><span>Vira um ícone na tela inicial, abre em tela cheia e funciona sem internet.</span>';
+    if (pedidoInstalar) h += '<button class="btn" data-instalar="1" style="align-self:flex-start">Instalar app</button>';
+    else if (ehIOS) h += '<ol><li>Abra este endereço no <strong>Safari</strong>.</li><li>Toque em Compartilhar (quadrado com seta para cima).</li><li>Toque em <strong>Adicionar à Tela de Início</strong>.</li></ol>';
+    else h += '<ol><li>Abra este endereço no <strong>Chrome</strong>.</li><li>Toque no menu ⋮.</li><li>Toque em <strong>Instalar app</strong> ou <strong>Adicionar à tela inicial</strong>.</li></ol>';
+    h += '<span class="small muted">As marcações ficam guardadas em cada celular. Cada uma instala no seu.</span></div>';
+    return h;
+  }
+  if ("serviceWorker" in navigator && !emIframe && location.protocol !== "file:") {
+    window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => { /* segue sem offline */ }));
+  }
+
   function vPlano() {
     const p = prefs.pessoa;
     const pe = P.PESSOAS[p];
@@ -358,6 +380,7 @@
 
     const nomeArq = "perfil-" + p;
     const padrao = ini === P.INICIO_PADRAO;
+    h += cartaoInstalar();
     h += '<div class="card"><h3>Lembretes no celular</h3><span>Uma página web não consegue tocar alarme com o celular bloqueado. O calendário do celular consegue. Importe um destes arquivos e cada item do dia vira um alarme no horário exato, até o fim das 12 semanas.</span>' +
       '<ul><li><strong>Essencial</strong> (17 alarmes): refeições, creatina, 3 pausas de banheiro, treino, compras e preparo. Comece por este.</li><li><strong>Completo</strong> (30 alarmes): inclui toda a água. Pode cansar; troque para o essencial se começar a ignorar.</li></ul>' +
       '<div class="row">' + (padrao
@@ -499,6 +522,8 @@
     if (ds.copiar) { copiarLista(); return; }
     if (ds.ics) { baixarICS(ds.ics === "1"); return; }
     if (ds.notif) { pedirNotificacao(); return; }
+    if (ds.semdica) { prefs.semDicaInstalar = true; salvarPrefs(); render(); return; }
+    if (ds.instalar && pedidoInstalar) { pedidoInstalar.prompt(); pedidoInstalar.userChoice.finally(() => { pedidoInstalar = null; render(); }); return; }
   });
 
   document.addEventListener("change", (e) => {

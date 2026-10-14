@@ -33,12 +33,20 @@ Página web não toca alarme com o celular bloqueado. Por isso os lembretes saem
 
 Os arquivos usam início em segunda, 19/10/2026. Para outra data: `node scripts/gerar-ics.mjs 2026-10-26`, ou mude a data na aba Plano e baixe de lá.
 
+## Instalar no celular (Android e iPhone)
+
+O app é um PWA: depois de publicado num endereço HTTPS, cada uma instala no próprio celular.
+
+1. **Publicar (uma vez):** em [Cloudflare Pages](https://pages.cloudflare.com) → Create → Pages → Connect to Git → escolha este repositório (pode ser privado). Branch: a desta versão. Build command: vazio. Output directory: `/`. Netlify também funciona (`netlify.toml` já está pronto).
+2. **iPhone:** abra o endereço no Safari → Compartilhar → Adicionar à Tela de Início.
+3. **Android:** abra no Chrome → menu ⋮ → Instalar app (ou o botão "Instalar app" na aba Plano).
+
+Depois de instalado, abre em tela cheia e funciona sem internet. Cada push no repositório atualiza o app; a versão nova aparece na abertura seguinte. Ao mudar arquivos do app, suba o número `VERSAO` em `sw.js`.
+
 ## Onde ficam as marcações
 
-- Aberto direto no navegador (ou pelo GitHub Pages): ficam salvas no aparelho.
+- App instalado ou aberto no navegador: ficam salvas em cada celular, sem sincronizar entre as duas.
 - Aberto como Artifact no claude.ai: sincroniza entre as duas (precisa de acesso de edição).
-
-GitHub Pages: Settings → Pages → Branch → pasta raiz.
 
 ## Editar
 
