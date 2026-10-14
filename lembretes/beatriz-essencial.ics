@@ -1,0 +1,268 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Rotina Bea e Lo//PT-BR
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Rotina Beatriz (essencial)
+BEGIN:VEVENT
+UID:bea-acordar-0700-0@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261019T070000
+DTEND:20261019T070500
+RRULE:FREQ=DAILY;UNTIL=20270111T235900
+SUMMARY:Acordar: 300 ml de água + banheiro
+DESCRIPTION:O copo já está cheio do lado da cama.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Acordar: 300 ml de água + banheiro
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-ref_cafe-0730-1@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261019T073000
+DTEND:20261019T075000
+RRULE:FREQ=DAILY;UNTIL=20270111T235900
+SUMMARY:Café da manhã reforçado
+DESCRIPTION:2 ovos mexidos com 1 fatia de muçarela\n2 fatias de pão int
+ egral\n200 ml de leite com café (mexa a creatina aqui)\n½ banana ou 1 
+ fatia de mamão\n\nDia difícil: 1 copo de leite + 1 pão com queijo. Ou
+  o shake da manhã agora.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Café da manhã reforçado
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-creatina-0735-2@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261019T073500
+DTEND:20261019T074000
+RRULE:FREQ=DAILY;UNTIL=20270111T235900
+SUMMARY:Creatina 3 g
+DESCRIPTION:Misture no leite\, café ou água.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Creatina 3 g
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-ref_lanche1-1000-3@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261019T100000
+DTEND:20261019T102000
+RRULE:FREQ=DAILY;UNTIL=20270111T235900
+SUMMARY:Shake 1 (liquidificador)
+DESCRIPTION:250 ml de leite integral\n1 dose (30 g) de whey\n1 banana peq
+ uena congelada\n2 colheres (sopa) de aveia\n1 colher (sopa) de pasta de 
+ amendoim\n\nDia difícil: Leite + whey batidos. Só isso já conta.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Shake 1 (liquidificador)
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-pausa-1200-4@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261019T120000
+DTEND:20261019T120500
+RRULE:FREQ=DAILY;UNTIL=20270111T235900
+SUMMARY:Pausa: banheiro + encher a garrafa
+DESCRIPTION:
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Pausa: banheiro + encher a garrafa
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-ref_almoco-1215-5@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261019T121500
+DTEND:20261019T123500
+RRULE:FREQ=DAILY;UNTIL=20270111T235900
+SUMMARY:Almoço pequeno
+DESCRIPTION:Prato de sobremesa\, não prato raso\n2 colheres (sopa) de le
+ gume cozido macio (cenoura\, abobrinha\, abóbora) + fio de azeite\nProt
+ eína macia: 2 colheres (sopa) de frango desfiado no molho\, ou 1 ovo\, 
+ ou omelete\n1 concha de feijão (pode ser só o caldo grosso ou batido)\
+ n3 colheres (sopa) de arroz ou purê\n\nDia difícil: Sopa creme ou 1 co
+ po de leite + 1 ovo. Se não descer nada\, faça o shake.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Almoço pequeno
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-ref_lanche2-1530-6@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261019T153000
+DTEND:20261019T155000
+RRULE:FREQ=DAILY;UNTIL=20270111T235900
+SUMMARY:Lanche da tarde
+DESCRIPTION:1 iogurte natural integral (170 g)\n1 colher (sopa) de chia\n
+ 10 g de castanhas picadas (≈ 4 unidades) ou 2 colheres de granola sem 
+ açúcar\n4 morangos picados\n\nDia difícil: 1 iogurte ou 1 copo de lei
+ te.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lanche da tarde
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-agua5-1700-7@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261019T170000
+DTEND:20261019T170500
+RRULE:FREQ=DAILY;UNTIL=20270111T235900
+SUMMARY:Água 200 ml + banheiro
+DESCRIPTION:
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Água 200 ml + banheiro
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-treino-1915-8@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261019T191500
+DTEND:20261019T200500
+RRULE:FREQ=WEEKLY;BYDAY=MO;UNTIL=20270111T235900
+SUMMARY:Treino A · Pernas: frente da coxa
+DESCRIPTION:Abra a aba Treino e marque cada série.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Treino A · Pernas: frente da coxa
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-ref_jantar-2015-9@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261019T201500
+DTEND:20261019T203500
+RRULE:FREQ=WEEKLY;BYDAY=MO,TU,TH,FR;UNTIL=20270111T235900
+SUMMARY:Jantar-sobremesa planejado
+DESCRIPTION:Achocolatado turbinado: 300 ml de leite\n+ 1 colher (sopa) de
+  cacau 100%\n+ achocolatado 3 Corações (quantidade da redução gradua
+ l\, abaixo)\n+ 1 colher (sopa) de pasta de amendoim + 1 colher (sopa) de
+  aveia\, batido\n\nDia difícil: Leite com achocolatado. Melhor tomar al
+ go do que pular o jantar.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Jantar-sobremesa planejado
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-amanha-2230-10@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261019T223000
+DTEND:20261019T223500
+RRULE:FREQ=DAILY;UNTIL=20270111T235900
+SUMMARY:Deixar amanhã pronto
+DESCRIPTION:Marmita na frente da geladeira\, garrafa cheia\, copo ao lado
+  da cama\, ingredientes do shake juntos.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deixar amanhã pronto
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-treino-1915-11@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261020T191500
+DTEND:20261020T200500
+RRULE:FREQ=WEEKLY;BYDAY=TU;UNTIL=20270111T235900
+SUMMARY:Treino B · Parte de cima: costas\, peito\, ombro
+DESCRIPTION:Abra a aba Treino e marque cada série.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Treino B · Parte de cima: costas\, peito\, ombro
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-ref_jantar-2000-12@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261021T200000
+DTEND:20261021T202000
+RRULE:FREQ=WEEKLY;BYDAY=WE,SA,SU;UNTIL=20270111T235900
+SUMMARY:Jantar-sobremesa planejado
+DESCRIPTION:Achocolatado turbinado: 300 ml de leite\n+ 1 colher (sopa) de
+  cacau 100%\n+ achocolatado 3 Corações (quantidade da redução gradua
+ l\, abaixo)\n+ 1 colher (sopa) de pasta de amendoim + 1 colher (sopa) de
+  aveia\, batido\n\nDia difícil: Leite com achocolatado. Melhor tomar al
+ go do que pular o jantar.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Jantar-sobremesa planejado
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-treino-1915-13@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261022T191500
+DTEND:20261022T200500
+RRULE:FREQ=WEEKLY;BYDAY=TH;UNTIL=20270111T235900
+SUMMARY:Treino C · Pernas: glúteo e posterior
+DESCRIPTION:Abra a aba Treino e marque cada série.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Treino C · Pernas: glúteo e posterior
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-treino-1915-14@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261023T191500
+DTEND:20261023T200500
+RRULE:FREQ=WEEKLY;BYDAY=FR;UNTIL=20270111T235900
+SUMMARY:Treino D · Parte de cima: costas e braços
+DESCRIPTION:Abra a aba Treino e marque cada série.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Treino D · Parte de cima: costas e braços
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-compras-1030-15@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261024T103000
+DTEND:20261024T103500
+RRULE:FREQ=WEEKLY;BYDAY=SA;UNTIL=20270111T235900
+SUMMARY:Compras da semana
+DESCRIPTION:Lista pronta na aba Compras. Vão juntas.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Compras da semana
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bea-preparo-1600-16@rotina-bea-lo
+DTSTAMP:20261014T120000Z
+DTSTART:20261025T160000
+DTEND:20261025T160500
+RRULE:FREQ=WEEKLY;BYDAY=SU;UNTIL=20270111T235900
+SUMMARY:Preparo da semana (1h30\, juntas)
+DESCRIPTION:Assar frango e batata-doce\, desfiar frango\, cozinhar legume
+ s\, montar 10 marmitas iguais\, congelar 7 bananas em rodelas\, porciona
+ r o whey em potinhos.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Preparo da semana (1h30\, juntas)
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+END:VCALENDAR
